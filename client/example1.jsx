@@ -3,9 +3,10 @@ const { createRoot } = require('react-dom/client')
 
 const HelloWorld = () => {
 	let id = 'the-bonjour'
+	const [name, setName] = React.useState('first');
 	return (
-		<div id={id}>
-			Bonjour!
+		<div id={id} onClick={() => setName('second')}>
+			Bonjour, {name}!
 		</div>
 	);
 };
