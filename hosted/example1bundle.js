@@ -15,7 +15,7 @@
   \*****************************/
 /***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
 
-eval("const React = __webpack_require__(/*! react */ \"./node_modules/react/index.js\");\nconst {\n  createRoot\n} = __webpack_require__(/*! react-dom/client */ \"./node_modules/react-dom/client.js\");\nconst HelloWorld = () => {\n  let id = 'the-bonjour';\n  const [name, setName] = React.useState('first');\n  return /*#__PURE__*/React.createElement(\"div\", {\n    id: id,\n    onClick: () => setName('second')\n  }, \"Bonjour, \", name, \"!\");\n};\nconst init = () => {\n  const appElement = document.getElementById('app');\n  const root = createRoot(appElement);\n  root.render(/*#__PURE__*/React.createElement(HelloWorld, null));\n};\nwindow.onload = init;\n\n//# sourceURL=webpack://react-functional-components/./client/example1.jsx?");
+eval("const React = __webpack_require__(/*! react */ \"./node_modules/react/index.js\");\nconst {\n  createRoot\n} = __webpack_require__(/*! react-dom/client */ \"./node_modules/react-dom/client.js\");\nconst HelloWorld = () => {\n  let id = 'the-bonjour';\n  const [name, setName] = React.useState('first');\n  const handleClick = () => {\n    setName('new thing');\n  };\n  return /*#__PURE__*/React.createElement(\"div\", {\n    id: id,\n    onClick: handleClick\n  }, \"Bonjour, \", name, \"!\");\n};\nconst init = () => {\n  const appElement = document.getElementById('app');\n  const root = createRoot(appElement);\n  root.render(/*#__PURE__*/React.createElement(HelloWorld, null));\n};\nwindow.onload = init;\n\n//# sourceURL=webpack://react-functional-components/./client/example1.jsx?");
 
 /***/ }),
 
