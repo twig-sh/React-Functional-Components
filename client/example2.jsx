@@ -7,15 +7,14 @@ const artists = [
 	'The Crane Wives'
 ]
 
-const songs = {
-	'Sabrina Carpenter': ['Please Please Please', 'Nonsense', 'Espresso'],
-	'Chloe Moriondo': ['Bugbear', 'Manta Rays', 'Spirit Orb'],
-	'The Crane Wives': ['The Moon Will Sing', 'Never Love an Anchor', 'Curses']
-
-}
-
 const SongsList = (props) => {
-	const {artist, songs} = props;
+	const {artist, songs, isLoading, error} = props;
+
+  if (!songs) {
+    return (
+      <p>Loading...</p>
+    )
+  }
 
 	return (
 		<>
@@ -49,11 +48,34 @@ const ArtistDropdown = ({artist, setArtist}) => {
 
 const App = () => {
 	const [artist, setArtist] = React.useState('Sabrina Carpenter')
+  const [songs, setSongs] = React.useSyncExternalStore(null);
+  const [isLoading, setIsLoading] = React.useState(false);
+  const [error, setError] = React.useState(null);
+
+  React.useEffect(() => {
+    const fetchSongs = async () => {
+      setIsLoading(true);
+      try {
+        const response = await fetch('/getSongs');
+        const data = await response.json();
+      } catch (e) {
+        console.error('Error fetching songs');
+        setError('Error fetching songs');
+      } finally {
+        setIsLoading(false);
+      };
+      fetchSongs().then(songs => {
+        setSongs(songs);
+      })
+    }
+  }, []);
+  
+  const artistSongs = songs ? songs[artist] : null;
 
 	return (
 		<>
 			<ArtistDropdown artist={artist} setArtist={setArtist}/>
-			<SongsList artist={artist} songs={songs[artist]} />
+			<SongsList artist={artist} songs={songs[artist]} isLoading error />
 		</>
 	)
 }

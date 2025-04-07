@@ -11,11 +11,15 @@ const example3 = (req, res) => {
 };
 
 const getSongs = (req, res) => {
-  res.json([
-    { artist: 'Rick Astley', title: 'Never Gonna Give You Up' },
-    { artist: 'Washed Out', title: 'Feel It All Around' },
-    { artist: 'Men I Trust', title: 'Show Me How' },
-  ]);
+  const songs = {
+    'Sabrina Carpenter': ['Please Please Please', 'Nonsense', 'Espresso'],
+    'Chloe Moriondo': ['Bugbear', 'Manta Rays', 'Spirit Orb'],
+    'The Crane Wives': ['The Moon Will Sing', 'Never Love an Anchor', 'Curses']
+  };
+
+  setTimeout(300);
+
+  res.json(songs);
 };
 
 module.exports.example1 = example1;
