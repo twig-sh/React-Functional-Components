@@ -14,7 +14,7 @@ const getSongs = (req, res) => {
   const songs = {
     'Sabrina Carpenter': ['Please Please Please', 'Nonsense', 'Espresso'],
     'Chloe Moriondo': ['Bugbear', 'Manta Rays', 'Spirit Orb'],
-    'The Crane Wives': ['The Moon Will Sing', 'Never Love an Anchor', 'Curses']
+    'The Crane Wives': ['The Moon Will Sing', 'Never Love an Anchor', 'Curses'],
   };
 
   setTimeout(300);

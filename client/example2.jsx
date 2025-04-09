@@ -1,5 +1,6 @@
 const React = require('react');
 const { createRoot } = require('react-dom/client')
+const useLocalStorage = require('./useLocalStorage.js')
 
 const artists = [
 	'Sabrina Carpenter',
@@ -10,7 +11,13 @@ const artists = [
 const SongsList = (props) => {
 	const {artist, songs, isLoading, error} = props;
 
-  if (!songs) {
+  if (error) {
+    return (
+      <p>ERROR: {error}</p>
+    )
+  }
+
+  if (isLoading) {
     return (
       <p>Loading...</p>
     )
@@ -47,8 +54,8 @@ const ArtistDropdown = ({artist, setArtist}) => {
 }
 
 const App = () => {
-	const [artist, setArtist] = React.useState('Sabrina Carpenter')
-  const [songs, setSongs] = React.useSyncExternalStore(null);
+	const [artist, setArtist] = useLocalStorage('Sabrina Carpenter')
+  const [songs, setSongs] = React.useState(null);
   const [isLoading, setIsLoading] = React.useState(false);
   const [error, setError] = React.useState(null);
 
@@ -57,10 +64,12 @@ const App = () => {
       setIsLoading(true);
       try {
         const response = await fetch('/getSongs');
-        const data = await response.json();
+        console.log(response);
+        return await response.json();
       } catch (e) {
         console.error('Error fetching songs');
         setError('Error fetching songs');
+        setSongs([]);
       } finally {
         setIsLoading(false);
       };
@@ -70,12 +79,12 @@ const App = () => {
     }
   }, []);
   
-  const artistSongs = songs ? songs[artist] : null;
+  const artistSongs = songs ? songs[artist] : [];
 
 	return (
 		<>
 			<ArtistDropdown artist={artist} setArtist={setArtist}/>
-			<SongsList artist={artist} songs={songs[artist]} isLoading error />
+			<SongsList artist={artist} songs={artistSongs} isLoading error />
 		</>
 	)
 }
